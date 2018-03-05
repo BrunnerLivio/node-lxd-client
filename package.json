@@ -1,13 +1,12 @@
 {
   "name": "node-lxd-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Client for the LXD REST-API for NodeJS",
   "main": "lib/index.js",
   "scripts": {
     "start": "node index.js",
     "build": "tsc",
-    "prepublish": "npm run build",
-    "publish": "npm publish"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
