@@ -15,7 +15,7 @@ export class LXD {
         return this.imageService;
     }
 
-    public authenticate(): Promise<any> {
+    public authorizeCertificate(): Promise<any> {
         return this.client.authorizeCertificate();
     }
 }

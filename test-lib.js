@@ -10,7 +10,7 @@ const lxd = new LXD({
 });
 
 
-lxd.authenticate()
+lxd.authorizeCertificate()
     .then(data => lxd.image.all())
     .then(data => {
         console.log(data);
