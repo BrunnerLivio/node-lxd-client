@@ -1,1 +1,1 @@
-# lxd-api-client
+# node-lxd-client

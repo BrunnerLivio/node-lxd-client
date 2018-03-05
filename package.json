@@ -1,7 +1,7 @@
 {
-  "name": "lxd-api-client",
+  "name": "node-lxd-client",
   "version": "0.0.1",
-  "description": "Client for the LXD REST-API",
+  "description": "Client for the LXD REST-API for NodeJS",
   "main": "lib/index.js",
   "scripts": {
     "start": "node index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BrunnerLivio/lxd-api-client.git"
+    "url": "git+https://github.com/BrunnerLivio/node-lxd-client.git"
   },
   "keywords": [
     "lxd",
@@ -22,9 +22,9 @@
   "author": "Livio Brunner",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/BrunnerLivio/lxd-api-client/issues"
+    "url": "https://github.com/BrunnerLivio/node-lxd-client/issues"
   },
-  "homepage": "https://github.com/BrunnerLivio/lxd-api-client#readme",
+  "homepage": "https://github.com/BrunnerLivio/node-lxd-client#readme",
   "dependencies": {
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
