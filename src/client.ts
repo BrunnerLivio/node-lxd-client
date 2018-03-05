@@ -1,4 +1,5 @@
-import url from 'url';
+import * as Url from 'url';
+import * as Request from 'request-promise';
 
 export interface ClientSettings {
     host?: string;
@@ -18,7 +19,7 @@ export class Client {
     }
 
     private getPortString() {
-        const parsedUrl: URL = url.parse(this.settings.host);
+        const parsedUrl: URL = Url.parse(this.settings.host);
         return parsedUrl.port ? `:${parsedUrl.port}/` : '/';
     }
 
@@ -26,7 +27,7 @@ export class Client {
         if (this.isLocal) {
             return `http://unix:/varlib/lxd/unix.socket:/`;
         } else {
-            const parsedUrl: URL = url.parse(this.settings.host);
+            const parsedUrl: URL = Url.parse(this.settings.host);
             const port: string = this.getPortString();
             return `${parsedUrl.protocol}//${parsedUrl.hostname}${port}`;
         }
@@ -36,9 +37,45 @@ export class Client {
         if (this.isLocal) {
             return 'ws+unix:///var/lib/lxd/unix.socket:/';
         } else {
-            const parsedUrl: URL = url.parse(this.settings.host);
+            const parsedUrl: URL = Url.parse(this.settings.host);
             const port: string = this.getPortString();
             return `ws://${parsedUrl.protocol}${port}`;
         }
+    }
+
+    public async get(url: string) {
+        return Request({
+            method: 'GET',
+            uri: this.hostUri + url,
+            cert: this.settings.cert,
+            key: this.settings.key,
+            rejectUnauthorized: false,
+            json: true,
+            headers: {
+                Host: ''
+            }
+        });
+    }
+
+    authorizeCertificate(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            Request({
+                method: 'POST',
+                uri: this.hostUri + '1.0/certificates',
+                headers: {
+                    Host: ''
+                },
+                body: {
+                    password: this.settings.password,
+                    type: 'client'
+                },
+                rejectUnauthorized: false,
+                json: true,
+                cert: this.settings.cert,
+                key: this.settings.key
+            })
+                .then(data => resolve(data))
+                .catch(data => data && data.statusCode === 400 ? resolve(data) : reject(data));
+        });
     }
 }
