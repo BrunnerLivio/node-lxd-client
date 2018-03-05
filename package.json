@@ -1,0 +1,33 @@
+{
+  "name": "lxd-api-client",
+  "version": "0.0.1",
+  "description": "Client for the LXD REST-API",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrunnerLivio/lxd-api-client.git"
+  },
+  "keywords": [
+    "lxd",
+    "rest",
+    "api",
+    "client"
+  ],
+  "author": "Livio Brunner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BrunnerLivio/lxd-api-client/issues"
+  },
+  "homepage": "https://github.com/BrunnerLivio/lxd-api-client#readme",
+  "dependencies": {
+    "typescript": "^2.7.2",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "ts-node": "^5.0.1"
+  }
+}
