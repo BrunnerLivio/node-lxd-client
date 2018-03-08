@@ -50,10 +50,7 @@ export class Client {
             cert: this.settings.cert,
             key: this.settings.key,
             rejectUnauthorized: false,
-            json: true,
-            headers: {
-                Host: ''
-            }
+            json: true
         });
     }
 
@@ -62,9 +59,6 @@ export class Client {
             Request({
                 method: 'POST',
                 uri: this.hostUri + '1.0/certificates',
-                headers: {
-                    Host: ''
-                },
                 body: {
                     password: this.settings.password,
                     type: 'client'
