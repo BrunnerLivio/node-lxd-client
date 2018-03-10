@@ -1,3 +1,3 @@
-import { LXD } from './lxd';
+import { LXD, LXDSettings } from './lxd';
 
-export { LXD };
+export { LXD, LXDSettings };

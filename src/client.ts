@@ -1,5 +1,6 @@
 import * as Url from 'url';
 import * as Request from 'request-promise';
+import * as Winston from 'winston';
 
 export interface ClientSettings {
     host?: string;
@@ -44,19 +45,21 @@ export class Client {
     }
 
     public async get(url: string) {
-        return Request({
+        const request = {
             method: 'GET',
             uri: this.hostUri + url,
             cert: this.settings.cert,
             key: this.settings.key,
             rejectUnauthorized: false,
             json: true
-        });
+        };
+        Winston.log('debug', 'Requesting', request)
+        return Request(request);
     }
 
     authorizeCertificate(): Promise<any> {
         return new Promise((resolve, reject) => {
-            Request({
+            const request = {
                 method: 'POST',
                 uri: this.hostUri + '1.0/certificates',
                 body: {
@@ -67,7 +70,10 @@ export class Client {
                 json: true,
                 cert: this.settings.cert,
                 key: this.settings.key
-            })
+            };
+
+            Winston.log('debug', 'Requesting', request)
+            Request(request)
                 .then(data => resolve(data))
                 .catch(data => data && data.statusCode === 400 ? resolve(data) : reject(data));
         });
