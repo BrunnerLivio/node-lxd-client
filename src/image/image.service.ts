@@ -1,25 +1,40 @@
 import { Client } from '../client';
 import { Service } from '../service';
+import * as async from 'async';
+import * as Winston from 'winston';
 
 export class ImageService extends Service {
     constructor(client: Client) {
         super('/1.0/images', client);
     }
 
-    private getFingerprintFromUri(uri: string) {
+    private getFingerprintFromUri(uri: string): string{
         const splitted = uri.split('/');
         return splitted[splitted.length - 1];
     }
 
-    async all(lazy: boolean = false): Promise<any[]> {
+    async all(lazy: boolean = false, sequentially: boolean = false): Promise<any[]> {
         const data = await this.get('');
         if (lazy) {
             return data.metadata;
         } else {
             const metadata = data.metadata.map(uri => this.getFingerprintFromUri(uri));
-            return await Promise.all(
-                metadata.map(async (fingerprint) =>
-                    await this.one(fingerprint)));
+    
+            return new Promise<any[]>((resolve, reject) => {
+                const callback = (err, results) => err ? reject(err) : resolve(results);
+
+                const itaree = (fingerprint: string, next: Function) => this.one(fingerprint)
+                    .then(metadata => next(false, metadata))
+                    .catch(err => next(true, err));
+
+                if(sequentially) {
+                    Winston.log('silly', 'Calling mapSeries');
+                    async.mapSeries(metadata, itaree, callback);
+                } else {
+                    Winston.log('silly', 'Calling map');                    
+                    async.map(metadata, itaree, callback);
+                }
+            });
         }
     }
 

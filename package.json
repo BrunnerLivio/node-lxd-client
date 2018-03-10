@@ -25,14 +25,15 @@
   },
   "homepage": "https://github.com/BrunnerLivio/node-lxd-client#readme",
   "dependencies": {
-    "@types/winston": "^2.3.8",
+    "async": "^2.6.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "url": "^0.11.0",
-    "winston": "^3.0.0-rc2"
+    "winston": "^2.4.0"
   },
   "devDependencies": {
-    "typescript": "^2.7.2",
-    "ts-node": "^5.0.1"
+    "@types/async": "^2.0.47",
+    "@types/winston": "^2.3.8",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
   }
 }

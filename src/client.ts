@@ -20,7 +20,7 @@ export class Client {
     }
 
     private getPortString() {
-        const parsedUrl: URL = Url.parse(this.settings.host);
+        const parsedUrl : Url.UrlWithStringQuery = Url.parse(this.settings.host);
         return parsedUrl.port ? `:${parsedUrl.port}/` : '/';
     }
 
@@ -28,7 +28,7 @@ export class Client {
         if (this.isLocal) {
             return `http://unix:/varlib/lxd/unix.socket:/`;
         } else {
-            const parsedUrl: URL = Url.parse(this.settings.host);
+            const parsedUrl: Url.UrlWithStringQuery = Url.parse(this.settings.host);
             const port: string = this.getPortString();
             return `${parsedUrl.protocol}//${parsedUrl.hostname}${port}`;
         }
@@ -38,7 +38,7 @@ export class Client {
         if (this.isLocal) {
             return 'ws+unix:///var/lib/lxd/unix.socket:/';
         } else {
-            const parsedUrl: URL = Url.parse(this.settings.host);
+            const parsedUrl: Url.UrlWithStringQuery = Url.parse(this.settings.host);
             const port: string = this.getPortString();
             return `ws://${parsedUrl.protocol}${port}`;
         }
@@ -53,13 +53,13 @@ export class Client {
             rejectUnauthorized: false,
             json: true
         };
-        Winston.log('debug', 'Requesting', request)
+        Winston.log('debug', 'Requesting', {method: request.method, uri: request.uri})
         return Request(request);
     }
 
     authorizeCertificate(): Promise<any> {
         return new Promise((resolve, reject) => {
-            const request = {
+            const request: any = {
                 method: 'POST',
                 uri: this.hostUri + '1.0/certificates',
                 body: {
@@ -67,12 +67,12 @@ export class Client {
                     type: 'client'
                 },
                 rejectUnauthorized: false,
-                json: true,
-                cert: this.settings.cert,
-                key: this.settings.key
+                json: true
             };
 
-            Winston.log('debug', 'Requesting', request)
+            Winston.log('debug', 'Requesting', request);
+            request.cert = this.settings.cert;
+            request.key = this.settings.key;
             Request(request)
                 .then(data => resolve(data))
                 .catch(data => data && data.statusCode === 400 ? resolve(data) : reject(data));
