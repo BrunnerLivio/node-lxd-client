@@ -1,8 +1,8 @@
-const { LXD } = require('./lib/');
+const { LXDRemoteClient } = require('./lib/');
 const fs = require('fs');
 const path = require('path');
 
-const lxd = new LXD({
+const lxcRemoteClient = new LXDRemoteClient({
     host: 'https://repo.emea.roche.com:8443',
     cert: fs.readFileSync(path.resolve(__dirname, '../../.config/lxc/client.crt')),
     key: fs.readFileSync(path.resolve(__dirname, '../../.config/lxc/client.key')),
@@ -10,10 +10,11 @@ const lxd = new LXD({
 });
 
 
-lxd.authorizeCertificate()
-    .then(data => lxd.image.all())
+lxcRemoteClient.authorizeCertificate()
+    .then(() => lxcRemoteClient.image.all())
     .then(data => {
-        console.log(data);
+        data.forEach(asdf => asdf);
+        console.log(JSON.stringify(data, null, 2));
     })
     .catch(data => {
         console.error(data);

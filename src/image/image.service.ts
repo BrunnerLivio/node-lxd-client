@@ -1,5 +1,11 @@
 import { Client } from '../client';
+import { RESTApiMetadata } from '../dtos';
 import { Service } from '../service';
+import { ImageDetail, SourceImageDto } from './dtos';
+
+
+export type ImageResponse = RESTApiMetadata<string[]>;
+export type ImageDetailResponse = RESTApiMetadata<ImageDetail>;
 
 export class ImageService extends Service {
     constructor(client: Client) {
@@ -11,8 +17,8 @@ export class ImageService extends Service {
         return splitted[splitted.length - 1];
     }
 
-    async all(lazy: boolean = false): Promise<any[]> {
-        const data = await this.get('');
+    async all(lazy: boolean = false): Promise<ImageDetail[] | string[]> {
+        const data = await this.get('') as ImageResponse;
         if (lazy) {
             return data.metadata;
         } else {
@@ -23,8 +29,12 @@ export class ImageService extends Service {
         }
     }
 
-    async one(fingerprint: string): Promise<object> {
-        const req = await this.get('/' + fingerprint);
+    async one(fingerprint: string): Promise<ImageDetail> {
+        const req = await this.get('/' + fingerprint) as ImageDetailResponse;
         return req.metadata;
+    }
+
+    async create(sourceImageDto: SourceImageDto) {
+        await this.post('', sourceImageDto);
     }
 }

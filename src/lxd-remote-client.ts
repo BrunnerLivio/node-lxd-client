@@ -3,7 +3,7 @@ import { ImageService } from './image/image.service';
 
 export interface LXDSettings extends ClientSettings { }
 
-export class LXD {
+export class LXDRemoteClient {
     private client: Client;
     private imageService: ImageService;
     constructor(private settings: LXDSettings) {

@@ -54,6 +54,17 @@ export class Client {
         });
     }
 
+    public async post(url: string, body: any) {
+        return Request({
+            method: 'GET',
+            uri: this.hostUri + url,
+            cert: this.settings.cert,
+            key: this.settings.key,
+            rejectUnauthorized: false,
+            json: body
+        });
+    }
+
     authorizeCertificate(): Promise<any> {
         return new Promise((resolve, reject) => {
             Request({

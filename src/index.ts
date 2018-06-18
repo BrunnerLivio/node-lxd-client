@@ -1,3 +1,7 @@
-import { LXD } from './lxd';
+import { LXDRemoteClient } from './lxd-remote-client';
 
-export { LXD };
+export { SourceImageDto, ImageDetail } from './image/dtos';
+export { RESTApiMetadata } from './dtos';
+
+export { LXDRemoteClient };
+

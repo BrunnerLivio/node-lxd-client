@@ -6,4 +6,8 @@ export abstract class Service {
     protected async get(url) {
         return this.client.get(this.url + url);
     }
+
+    protected async post(url, body) {
+        return this.client.post(this.url + url, body);
+    }
 }
