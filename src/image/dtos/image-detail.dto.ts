@@ -1,26 +1,26 @@
 export interface Properties {
-    architecture: string;
-    build: string;
-    description: string;
-    distribution: string;
-    os: string;
-    release: string;
-    serial: string;
+    readonly architecture: string;
+    readonly build: string;
+    readonly description: string;
+    readonly distribution: string;
+    readonly os: string;
+    readonly release: string;
+    readonly serial: string;
 }
 
 export interface ImageDetail {
-    auto_update: boolean;
-    properties: Properties;
-    public: boolean;
-    aliases: any[];
-    architecture: string;
-    cached: boolean;
-    filename: string;
-    fingerprint: string;
-    size: number;
-    created_at: Date;
-    expires_at: Date;
-    last_used_at: Date;
-    uploaded_at: Date;
+    readonly auto_update: boolean;
+    readonly properties: Properties;
+    readonly public: boolean;
+    readonly aliases: any[];
+    readonly architecture: string;
+    readonly cached: boolean;
+    readonly filename: string;
+    readonly fingerprint: string;
+    readonly size: number;
+    readonly created_at: Date;
+    readonly expires_at: Date;
+    readonly last_used_at: Date;
+    readonly uploaded_at: Date;
 }
 
