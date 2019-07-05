@@ -15,7 +15,7 @@ export class LXDRemoteClient {
         // @ts-ignore
         Winston.level = this.settings.debug || 'warn';
         Winston.remove(Winston.transports.Console);
-        Winston.add(Winston.transports.Console, {'timestamp':true});
+        Winston.add(Winston.transports.Console);
     }
 
     public get image(): ImageService {
