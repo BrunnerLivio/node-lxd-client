@@ -36,7 +36,7 @@ export class ImageService extends Service {
             const callback = (err, results) => err ? reject(err) : resolve(results);
 
             const itaree = (fingerprint: string, next: Function) => this.one(fingerprint)
-                .then(metadata => next(false, metadata));
+                .then(metadata => next(null, metadata));
 
             if (settings.sequentially) {
                 async.mapSeries(metadata, itaree, callback);
