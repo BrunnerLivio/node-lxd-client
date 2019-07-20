@@ -1,5 +1,4 @@
 import * as async from 'async';
-import * as Winston from 'winston';
 
 import { Client } from '../client';
 import { RESTApiMetadata } from '../dtos';
@@ -40,10 +39,8 @@ export class ImageService extends Service {
                 .then(metadata => next(false, metadata));
 
             if (settings.sequentially) {
-                Winston.log('silly', 'Calling mapSeries');
                 async.mapSeries(metadata, itaree, callback);
             } else {
-                Winston.log('silly', 'Calling map');
                 async.map(metadata, itaree, callback);
             }
         });
