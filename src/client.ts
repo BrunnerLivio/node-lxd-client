@@ -20,7 +20,7 @@ export class Client {
 
   private getPortString() {
     const parsedUrl: Url.UrlWithStringQuery = Url.parse(this.settings.host);
-    return parsedUrl.port ? `:${parsedUrl.port}/` : '/';
+    return parsedUrl.port ? `:${parsedUrl.port}` : '';
   }
 
   private getHostUri(): string {
